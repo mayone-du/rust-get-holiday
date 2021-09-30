@@ -1,16 +1,22 @@
 use chrono::{Datelike, Local};
-use koyomi::{Calendar, Date};
+use koyomi::{num_days, Calendar, Date};
 
 fn main() {
     // 実行した日時、時刻を取得
     let now = Local::now();
-    println!("now {}", &now);
+
+    let year = now.year();
+    let month = now.month();
 
     // 実行した月を対象とする
-    // TODO: 本当に使うなら、実行した次の月とか、引数から月を選択できるといいかも
-    let start_date: String = format!("{}-{}-01", now.year().to_string(), now.month().to_string(),);
-    // TODO: その月の最後の日付
-    let end_date: String = format!("{}-{}-31", now.year().to_string(), now.month().to_string(),);
+    let start_date: String = format!("{}-{}-01", year.to_string(), month.to_string(),);
+    let end_date: String = format!(
+        "{}-{}-{}",
+        year.to_string(),
+        month.to_string(),
+        // 指定した年月の最終日を返す
+        num_days(year, month)
+    );
 
     // 開始日時
     let start_date = Date::parse(&start_date).unwrap();
