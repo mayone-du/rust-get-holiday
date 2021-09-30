@@ -22,6 +22,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "koyomi"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7a00d5808a5e17ac41b0f010f2480c5834f437a2d71ee94a243bc7d1e0d6c889"
+dependencies = [
+ "chrono",
+]
+
+[[package]]
 name = "libc"
 version = "0.2.103"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -51,6 +60,7 @@ name = "rust-get-holiday"
 version = "0.1.0"
 dependencies = [
  "chrono",
+ "koyomi",
 ]
 
 [[package]]
