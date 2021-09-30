@@ -1,4 +1,4 @@
-use chrono::{Datelike, Local, NaiveDate};
+use chrono::{Datelike, Local};
 use koyomi::{Calendar, Date};
 
 fn main() {
@@ -6,32 +6,27 @@ fn main() {
     let now = Local::now();
     println!("now {}", &now);
 
-    // 実行したタイミングの月を取得
-    let month = now.month();
-    println!("month {}", month);
-
-    // match式で曜日を日本語に変換
-    let weekday = match now.weekday() {
-        chrono::Weekday::Mon => "月",
-        chrono::Weekday::Tue => "火",
-        chrono::Weekday::Wed => "水",
-        chrono::Weekday::Thu => "木",
-        chrono::Weekday::Fri => "金",
-        chrono::Weekday::Sat => "土",
-        chrono::Weekday::Sun => "日",
-    };
-    println!("{}", weekday);
+    // 実行した月を対象とする
+    // TODO: 本当に使うなら、実行した次の月とか、引数から月を選択できるといいかも
+    let start_date: String = format!("{}-{}-01", now.year().to_string(), now.month().to_string(),);
+    // TODO: その月の最後の日付
+    let end_date: String = format!("{}-{}-31", now.year().to_string(), now.month().to_string(),);
 
     // 開始日時
-    let start_date = NaiveDate::from_ymd(now.year(), now.month(), 1);
-    println!("start_date {}", start_date);
+    let start_date = Date::parse(&start_date).unwrap();
+    let end_date = Date::parse(&end_date).unwrap();
 
-    let date = Date::parse("2021-09-01").unwrap();
-    let date2 = Date::parse("2021-09-30").unwrap();
-
-    let calendar = Calendar::new(date, date2).unwrap().make();
+    // カレンダーを取得
+    let calendar = Calendar::new(start_date, end_date).unwrap().make();
     for day in calendar {
-        println!("calendar days {} {}", day.day(), day.weekday().japanese(),);
+        println!(
+            "calendar days {} {} {:?}",
+            day.day(),
+            // 曜日
+            day.weekday().japanese(),
+            // 祝日
+            day.holiday(),
+        );
     }
 
     // 現在日時をフォーマット
