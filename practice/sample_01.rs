@@ -20,4 +20,8 @@ fn main() {
     chrono::Weekday::Sun => "日",
   };
   println!("{}", weekday);
+
+  // 現在日時をフォーマット
+  let now = now.format("%Y年 %m月 %d日");
+  println!("now -> {}", now);
 }

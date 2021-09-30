@@ -24,17 +24,7 @@ fn main() {
 
     // カレンダーを取得
     let calendar = Calendar::new(start_date, end_date).unwrap().make();
-    for day in calendar {
-        // 全日にちを出力
-        // println!(
-        //     "calendar days {} {} {:?}",
-        //     day.day(),
-        //     // 曜日
-        //     day.weekday().japanese(),
-        //     // 祝日
-        //     day.holiday(),
-        // );
-
+    for day in &calendar {
         // 土日の場合
         match day.weekday().japanese() {
             '土' => println!("土曜 {}", day),
@@ -47,9 +37,44 @@ fn main() {
         }
     }
 
-    // 現在日時をフォーマット
-    let now = now.format("%Y年 %m月 %d日");
-    println!("now -> {}", now);
+    print_one_month_days(calendar);
+}
+
+fn print_one_month_days(calendar: std::vec::Vec<koyomi::Date>) {
+    print!("\n");
+    for day in calendar {
+        // 全日にちを出力
+        println!(
+            "calendar days {} {} {:?}",
+            day.day(),
+            // 曜日
+            day.weekday().japanese(),
+            // 祝日
+            day.holiday(),
+        );
+    }
 }
 
 // TODO: test
+#[cfg(test)]
+mod tests {
+    // use super::*;
+
+    #[test]
+    fn it_works() {
+        assert_eq!(2 + 2, 4);
+    }
+
+    // #[test]
+    // fn it_print_one_month_days() {
+    //     // すべての日数を表示
+    //     print_one_month_days(
+    //         Calendar::new(
+    //             koyomi::Date::parse("2021-09-01").unwrap(),
+    //             koyomi::Date::parse("2021-09-30").unwrap(),
+    //         )
+    //         .unwrap()
+    //         .make(),
+    //     )
+    // }
+}
