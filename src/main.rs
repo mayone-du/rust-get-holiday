@@ -1,4 +1,5 @@
 use chrono::{Datelike, Local};
+use colored::Colorize;
 use koyomi::{num_days, Calendar, Date};
 
 fn main() {
@@ -27,13 +28,13 @@ fn main() {
     for day in &calendar {
         // 土日の場合
         match day.weekday().japanese() {
-            '土' => println!("土曜 {}", day),
-            '日' => println!("日曜 {}", day),
+            '土' => println!("{} 土", day.to_string().red()),
+            '日' => println!("{} 日", day.to_string().blue()),
             // 土日以外
             _ => {}
         }
         if day.holiday() != None {
-            println!("{} {}", day.holiday().unwrap(), day);
+            println!("{} {}", day.to_string().green(), day.holiday().unwrap(),);
         }
     }
 
