@@ -20,11 +20,18 @@ fn main() {
     );
 
     // 開始日時
+    // let start_date = match Date::parse(&start_date) {
+    //     Ok(date) => date,
+    //     Err(err) => panic!("エラー {:?}", err),
+    // };
     let start_date = Date::parse(&start_date).unwrap();
     let end_date = Date::parse(&end_date).unwrap();
 
     // カレンダーを取得
-    let calendar = Calendar::new(start_date, end_date).unwrap().make();
+    let calendar = match Calendar::new(start_date, end_date) {
+        Ok(calendar) => calendar.make(),
+        Err(err) => panic!("カレンダーエラー {:?}", err),
+    };
     for day in &calendar {
         // 土日の場合
         match day.weekday().japanese() {
