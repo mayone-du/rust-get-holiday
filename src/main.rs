@@ -1,6 +1,7 @@
 use chrono::{Datelike, Local};
 use colored::Colorize;
 use koyomi::{num_days, Calendar, Date};
+use std::env::args;
 
 fn main() {
     // 実行した日時、時刻を取得
@@ -45,7 +46,13 @@ fn main() {
         }
     }
 
-    print_one_month_days(calendar);
+    // コマンドライン引数にallがあれば、全日付を出力
+    // TODO: エラーハンドリング
+    let args: Vec<String> = args().collect();
+    let flag = &args[1];
+    if flag == "all" {
+        print_one_month_days(calendar);
+    }
 }
 
 fn print_one_month_days(calendar: std::vec::Vec<koyomi::Date>) {
